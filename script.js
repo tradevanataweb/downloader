@@ -10,16 +10,12 @@ async function downloadContent() {
   status.textContent = "Downloading...";
 
   try {
-    const response = await fetch("https://download-j1r3.onrender.com/download", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ url })
-    });
+    // Encode the URL for safe inclusion in a query string
+    const encodedUrl = encodeURIComponent(url);
+    const response = await fetch(`https://download-j1r3.onrender.com/download?url=${encodedUrl}`);
 
     const data = await response.json();
-    
+
     if (response.ok) {
       status.textContent = "Download started or completed successfully.";
     } else {
