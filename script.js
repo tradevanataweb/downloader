@@ -1,16 +1,16 @@
-document.getElementById("downloadBtn").addEventListener("click", async () => {
-  const url = document.getElementById("urlInput").value.trim();
-  const resultDiv = document.getElementById("result");
+async function downloadContent() {
+  const url = document.getElementById('urlInput').value;
+  const status = document.getElementById('statusMessage');
 
   if (!url) {
-    resultDiv.textContent = "Please enter a URL.";
+    status.textContent = "Please enter a URL.";
     return;
   }
 
-  resultDiv.textContent = "Sending request...";
+  status.textContent = "Downloading...";
 
   try {
-    const response = await fetch("https://dow-j8cl.onrender.com/download", {
+    const response = await fetch("https://download-j1r3.onrender.com/download", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -19,13 +19,13 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
     });
 
     const data = await response.json();
-
+    
     if (response.ok) {
-      resultDiv.textContent = "Download successful: " + JSON.stringify(data);
+      status.textContent = "Download started or completed successfully.";
     } else {
-      resultDiv.textContent = "Error: " + (data.error || "Unknown error");
+      status.textContent = data.error || "Something went wrong.";
     }
-  } catch (err) {
-    resultDiv.textContent = "Request failed: " + err.message;
+  } catch (error) {
+    status.textContent = "Network error. Please try again.";
   }
-});
+}
